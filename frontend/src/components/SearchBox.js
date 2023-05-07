@@ -2,23 +2,24 @@
 
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import { useHistory } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function SearchBox() {
     const [keyword, setKeyword] = useState('') /*Barra de busqueda*/
 
-    let history = useHistory()
+    let navigate = useNavigate()
+    const location = useLocation()
 
     const submitHandler = (e) => { /*funcion de busqueda de palabras*/
         e.preventDefault()
         if (keyword) {
-            history.push(`/?keyword=${keyword}&page=1`)
+            navigate(`/?keyword=${keyword}&page=1`)
         } else {
-            history.push(history.push(history.location.pathname))
+            navigate(location.pathname)
         }
     }
     return ( /*Barra de busqueda diseño*/
-        <Form onSubmit={submitHandler} inline> 
+        <Form onSubmit={submitHandler} inline="true"> 
             <Form.Control
                 type='text'
                 name='q'
