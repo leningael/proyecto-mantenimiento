@@ -25,7 +25,7 @@ SECRET_KEY = 'sc%oco$+(3$z$at=z4j)#l-+ym)+_b11389mdt2^12m$bf63%@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #Se descativa el estado de DEBUG para el proceso de producción del sistema
-DEBUG = False
+DEBUG = True
 #Se indican todos los hosts que tienen acceso a los archivos de la carpeta
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'vetpetecommerce.azurewebsites.net']
 
