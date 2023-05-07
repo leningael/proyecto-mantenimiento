@@ -117,7 +117,7 @@ function ProductEditScreen() {
           <Message variant="danger">{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId="name">
+            <Form.Group className="my-4" controlId="name">
               <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="name"
@@ -127,7 +127,7 @@ function ProductEditScreen() {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="price">
+            <Form.Group className="my-4" controlId="price">
               <Form.Label>Precio</Form.Label>
               <Form.Control
                 type="number"
@@ -144,7 +144,7 @@ function ProductEditScreen() {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="image">
+            <Form.Group className="my-4" controlId="image">
               <Form.Label>Imagen</Form.Label>
               <Form.Control
                 type="text"
@@ -162,7 +162,7 @@ function ProductEditScreen() {
               {uploading && <Loader />}
             </Form.Group>
 
-            <Form.Group controlId="brand">
+            <Form.Group className="my-4" controlId="brand">
               <Form.Label>Marca</Form.Label>
               <Form.Control
                 type="text"
@@ -172,7 +172,7 @@ function ProductEditScreen() {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="countinstock">
+            <Form.Group className="my-4" controlId="countinstock">
               <Form.Label>Cantidad</Form.Label>
               <Form.Control
                 type="number"
@@ -189,7 +189,7 @@ function ProductEditScreen() {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="category">
+            <Form.Group className="my-4" controlId="category">
               <Form.Label>Categoria</Form.Label>
               <Form.Control
                 type="text"
@@ -199,7 +199,7 @@ function ProductEditScreen() {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="description">
+            <Form.Group className="my-4" controlId="description">
               <Form.Label>Descripción</Form.Label>
               <Form.Control
                 type="text"
@@ -209,7 +209,11 @@ function ProductEditScreen() {
               ></Form.Control>
             </Form.Group>
 
-            <Button type="submit" variant="primary" /*Enviar los datos*/>
+            <Button
+              className="my-3"
+              type="submit"
+              variant="primary" /*Enviar los datos*/
+            >
               Actualizar
             </Button>
           </Form>
