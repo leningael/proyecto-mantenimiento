@@ -134,10 +134,13 @@ function ProductEditScreen() {
                 placeholder="Ingresa el precio"
                 value={price}
                 onChange={(e) => {
-                  const value = e.target.value < 0 ? 0 : e.target.value;
-                  setPrice(value);
+                  const regex = /^\d+(\.\d{1,2})?$/; // Expresión regular que permite números y un punto decimal seguido de una o dos cifras decimales
+                  const value = e.target.value;
+                  if (regex.test(value)) {
+                    // Si el valor cumple con la expresión regular
+                    setPrice(value);
+                  }
                 }}
-                min="0"
               ></Form.Control>
             </Form.Group>
 
