@@ -1,6 +1,6 @@
 //Paul Hernandez y Vianey Martinez
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Form, Button, Row, Col, Table } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,7 +10,7 @@ import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 import { listMyOrders } from '../actions/orderActions'
 
-function ProfileScreen({ history }) {
+function ProfileScreen() {
     /*Perfil de los usuarios*/
 
     const [name, setName] = useState('')
@@ -33,11 +33,13 @@ function ProfileScreen({ history }) {
     const orderListMy = useSelector(state => state.orderListMy)
     const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
+    const navigate = useNavigate()
+
 
 /*Verificar el inicio de sesion y habilitando la opción de perfil*/
     useEffect(() => {
         if (!userInfo) {
-            history.push('/login')
+            navigate('/login')
         } else {
             if (!user || !user.name || success || userInfo._id !== user._id) {
                 dispatch({ type: USER_UPDATE_PROFILE_RESET })
@@ -48,7 +50,7 @@ function ProfileScreen({ history }) {
                 setEmail(user.email)
             }
         }
-    }, [dispatch, history, userInfo, user, success])
+    }, [dispatch, userInfo, user, success])
 
     const submitHandler = (e) => {
         e.preventDefault()

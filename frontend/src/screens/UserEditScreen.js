@@ -1,7 +1,7 @@
 //Vianey Martinez 
 
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
@@ -10,9 +10,10 @@ import FormContainer from '../components/FormContainer'
 import { getUserDetails, updateUser } from '../actions/userActions'
 import { USER_UPDATE_RESET } from '../constants/userConstants'
 
-function UserEditScreen({ match, history }) {/*Editar usuarios, pagina para admin*/
+function UserEditScreen() {/*Editar usuarios, pagina para admin*/
 
-    const userId = match.params.id
+    const { id: userId } = useParams();
+    const navigate = useNavigate()
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -30,7 +31,7 @@ function UserEditScreen({ match, history }) {/*Editar usuarios, pagina para admi
 
         if (successUpdate) { 
             dispatch({ type: USER_UPDATE_RESET })
-            history.push('/admin/userlist')
+            navigate('/admin/userlist')
         } else {
 
             if (!user.name || user._id !== Number(userId)) {
@@ -42,7 +43,7 @@ function UserEditScreen({ match, history }) {/*Editar usuarios, pagina para admi
             }
         }
 
-    }, [user, userId, successUpdate, history])
+    }, [user, userId, successUpdate])
 
     const submitHandler = (e) => {
         e.preventDefault()
