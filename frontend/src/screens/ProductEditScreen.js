@@ -1,7 +1,7 @@
 //Paul Hernandez
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
@@ -12,9 +12,9 @@ import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 
 /*Panatalla para el admin/staff*/
 
-function ProductEditScreen({ match, history }) {
-
-    const productId = match.params.id
+function ProductEditScreen() {
+    const { id: productId } = useParams();
+    const navigate = useNavigate()
 /*Datos de los productos*/
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
@@ -39,7 +39,7 @@ function ProductEditScreen({ match, history }) {
 
         if (successUpdate) {
             dispatch({ type: PRODUCT_UPDATE_RESET })
-            history.push('/admin/productlist')
+            navigate('/admin/productlist')
         } else {
             if (!product.name || product._id !== Number(productId)) {
                 dispatch(listProductDetails(productId))
@@ -54,10 +54,7 @@ function ProductEditScreen({ match, history }) {
 
             }
         }
-
-
-
-    }, [dispatch, product, productId, history, successUpdate])
+    }, [dispatch, product, productId, successUpdate])
 /*Información por producto*/
     const submitHandler = (e) => {
         e.preventDefault()
@@ -143,7 +140,6 @@ function ProductEditScreen({ match, history }) {
                             <Form.Group controlId='image'>
                                 <Form.Label>Imagen</Form.Label>
                                 <Form.Control
-
                                     type='text'
                                     placeholder='Ingresa imagen'
                                     value={image}
@@ -151,14 +147,13 @@ function ProductEditScreen({ match, history }) {
                                 >
                                 </Form.Control>
 
-                                <Form.File
-                                    id='image-file'
+                                <Form.Control
+                                    type='file'
                                     label='Choose File'
-                                    custom
+                                    custom='true'
                                     onChange={uploadFileHandler}
                                 >
-
-                                </Form.File>
+                                </Form.Control>
                                 {uploading && <Loader />}
 
                             </Form.Group>

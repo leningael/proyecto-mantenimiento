@@ -1,7 +1,7 @@
 //Paul Hernandez
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Button, Card, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
@@ -11,7 +11,9 @@ import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
 /*Panatalla de un producto en especifico*/
 
-function ProductScreen({ match, history }) {
+function ProductScreen() {
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [qty, setQty] = useState(1)
     const [rating, setRating] = useState(0)
     const [comment, setComment] = useState('')
@@ -39,18 +41,18 @@ function ProductScreen({ match, history }) {
             dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
         }
 
-        dispatch(listProductDetails(match.params.id))
+        dispatch(listProductDetails(id))
 
-    }, [dispatch, match, successProductReview])
+    }, [dispatch, successProductReview])
 
     const addToCartHandler = () => {
-        history.push(`/cart/${match.params.id}?qty=${qty}`)
+        navigate(`/cart/${id}?qty=${qty}`)
     }
 /*Subir reseñas*/
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(createProductReview(
-            match.params.id, {
+            id, {
             rating,
             comment
         }
