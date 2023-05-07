@@ -25,7 +25,7 @@ SECRET_KEY = 'sc%oco$+(3$z$at=z4j)#l-+ym)+_b11389mdt2^12m$bf63%@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #Se descativa el estado de DEBUG para el proceso de producción del sistema
-DEBUG = False
+#DEBUG = False
 #Se indican todos los hosts que tienen acceso a los archivos de la carpeta
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'vetpetecommerce.azurewebsites.net']
 
@@ -82,6 +82,9 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+# google sign in client id
+GOOGLE_CLIENT_ID = '697743163109-gl9qckdfkh76tps2orhe2uc35068jkh9.apps.googleusercontent.com'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

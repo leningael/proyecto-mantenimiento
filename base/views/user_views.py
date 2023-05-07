@@ -10,7 +10,13 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from rest_framework import status
-
+#**********************************************
+from backend.settings import GOOGLE_CLIENT_ID
+from google.oauth2 import id_token
+from google.auth.transport import requests
+import jwt
+from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -26,6 +32,29 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 #La función de registrar usuario permite que se creen cuentas, pero solo pueden ser emails no antes registrados
+
+# Google sign in handler view
+@api_view(['POST'])
+def google_sign_in(request):
+    token = request.data.get('token')
+    try:
+        idinfo = id_token.verify_oauth2_token(
+            token, requests.Request(), GOOGLE_CLIENT_ID)
+    except ValueError:
+        return JsonResponse({'error': 'Invalid token', 'message': f'{token} not valid'})
+    
+    user_email = idinfo['email']
+    try:
+    # Check if user exists in Django database, create new user if not
+        user = User.objects.get(email=user_email)
+    except User.DoesNotExist:
+        message = {'detail': 'User not created'}
+        return Response(message, status=status.HTTP_401_UNAUTHORIZED)
+    # Response user
+    response = UserSerializerWithToken(user, many=False)
+    return JsonResponse(response.data)
+
+
 
 @api_view(['POST'])
 def registerUser(request):
