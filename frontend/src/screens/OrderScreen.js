@@ -1,7 +1,7 @@
 //Paul Hernandez y Vianey Martinez 
 import React, { useState, useEffect } from 'react'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { PayPalButton } from 'react-paypal-button-v2'
 import Message from '../components/Message'
@@ -9,8 +9,9 @@ import Loader from '../components/Loader'
 import { getOrderDetails, payOrder, deliverOrder } from '../actions/orderActions'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants'
 
-function OrderScreen({ match, history }) {
-    const orderId = match.params.id
+function OrderScreen() {
+    const { id:orderId } = useParams()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 /*Constantes que se usaran*/
 
@@ -49,7 +50,7 @@ function OrderScreen({ match, history }) {
     useEffect(() => {
 
         if (!userInfo) {
-            history.push('/login')
+            navigate('/login')
         }
 
         if (!order || successPay || order._id !== Number(orderId) || successDeliver) {
@@ -185,7 +186,7 @@ function OrderScreen({ match, history }) {
                                         </Row>
                                     </ListGroup.Item>
 
-
+                                    
                                     {!order.isPaid && (
                                         <ListGroup.Item>
                                             {loadingPay && <Loader />}
