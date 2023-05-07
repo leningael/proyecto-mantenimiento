@@ -1,7 +1,7 @@
 //Vianey Martinez
 
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
@@ -9,28 +9,34 @@ import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
 import { login } from '../actions/userActions'
 import Logins from '../components/Logins';
+// import {GoogleLogin} from "react-google-login"
 import {gapi} from "gapi-script"
 import LoginButton from './login'
 const clientId="795948132843-dcfvnj4f58c0jisogn9qfqnsg20hat0f.apps.googleusercontent.com"
 
-function LoginScreen({ location, history }) {
+function LoginScreen() {
     //valores de usuarios 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const dispatch = useDispatch()
+    const location = useLocation()
+    const navigate = useNavigate()
 
-    const redirect = location.search ? location.search.split('=')[1] : '/'
+    const redirect = location.search ? `/${location.search.split('=')[1]}` : '/'
 
     const userLogin = useSelector(state => state.userLogin)
     const { error, loading, userInfo } = userLogin
+    const responseGoogle = (response) => {
+        console.log(response);
+      }
      
       //Enviar la información de usuario
     useEffect(() => {
         if (userInfo) {
-            history.push(redirect)
+            navigate(redirect)
         }
-    }, [history, userInfo, redirect])
+    }, [userInfo, redirect])
 
     const submitHandler = (e) => {
         e.preventDefault()

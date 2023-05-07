@@ -1,6 +1,6 @@
 //Vianey Martinez
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
@@ -8,8 +8,9 @@ import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
 import { register } from '../actions/userActions'
 
-function RegisterScreen({ location, history }) {
-
+function RegisterScreen() {
+    const navigate = useNavigate()
+    const location = useLocation()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -25,9 +26,9 @@ function RegisterScreen({ location, history }) {
 
     useEffect(() => {
         if (userInfo) {
-            history.push(redirect)
+            navigate(redirect)
         }
-    }, [history, userInfo, redirect])
+    }, [userInfo, redirect])
 
     const submitHandler = (e) => {
         e.preventDefault()

@@ -1,13 +1,15 @@
 //Paul Hernandez
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
-function CartScreen({ match, location, history }) {
-    const productId = match.params.id
+function CartScreen() {
+    const { id: productId } = useParams();
+    const location = useLocation()
+    const navigate = useNavigate()
     const qty = location.search ? Number(location.search.split('=')[1]) : 1
     const dispatch = useDispatch()
 
@@ -27,7 +29,7 @@ function CartScreen({ match, location, history }) {
     }
 //Constante para checkout
     const checkoutHandler = () => {
-        history.push('/login?redirect=shipping')
+        navigate('/login?redirect=shipping')
     }
 
     return (

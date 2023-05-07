@@ -1,5 +1,5 @@
 //Paul Hernandez
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,8 +8,11 @@ import Message from '../components/Message'
 import Paginate from '../components/Paginate'
 import { listProducts, deleteProduct, createProduct } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-function ProductListScreen({ history, match }) {
+function ProductListScreen() {
+    const location = useLocation()
+    const navigate = useNavigate()
 
     /*Mostrando los datos a el admin*/
     const dispatch = useDispatch()
@@ -27,22 +30,22 @@ function ProductListScreen({ history, match }) {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    let keyword = history.location.search
+    let keyword = location.search
     useEffect(() => {
         dispatch({ type: PRODUCT_CREATE_RESET })
 
         /*Verificar si inicio sesion*/
         if (!userInfo.isAdmin) {
-            history.push('/login')
+            navigate('/login')
         }
 
         if (successCreate) {
-            history.push(`/admin/product/${createdProduct._id}/edit`)
+            navigate(`/admin/product/${createdProduct._id}/edit`)
         } else {
             dispatch(listProducts(keyword))
         }
 
-    }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct, keyword])
+    }, [dispatch, userInfo, successDelete, successCreate, createdProduct, keyword])
 
 
     const deleteHandler = (id) => {
