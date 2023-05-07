@@ -1,42 +1,40 @@
-//Paul Hernandez y Vianey Martinez 
+//Paul Hernandez y Vianey Martinez
 
-import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import { Button, Form } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function SearchBox() {
-    const [keyword, setKeyword] = useState('') /*Barra de busqueda*/
+  const [keyword, setKeyword] = useState(""); /*Barra de busqueda*/
 
-    let navigate = useNavigate()
-    const location = useLocation()
+  let navigate = useNavigate();
+  const location = useLocation();
 
-    const submitHandler = (e) => { /*funcion de busqueda de palabras*/
-        e.preventDefault()
-        if (keyword) {
-            navigate(`/?keyword=${keyword}&page=1`)
-        } else {
-            navigate(location.pathname)
-        }
+  const submitHandler = (e) => {
+    /*funcion de busqueda de palabras*/
+    e.preventDefault();
+    if (keyword) {
+      navigate(`/?keyword=${keyword}&page=1`);
+    } else {
+      navigate(location.pathname);
     }
-    return ( /*Barra de busqueda diseño*/
-        <Form onSubmit={submitHandler} inline="true"> 
-            <Form.Control
-                type='text'
-                name='q'
-                onChange={(e) => setKeyword(e.target.value)}
-                className='mr-sm-2 ml-sm-5'
-                placeholder='Busca los mejores productos para mascota'
-            ></Form.Control>
+  };
+  return (
+    /*Barra de busqueda diseño*/
+    <Form onSubmit={submitHandler} inline="true">
+      <Form.Control
+        type="text"
+        name="q"
+        onChange={(e) => setKeyword(e.target.value)}
+        className="mr-sm-2 ml-sm-5"
+        placeholder="Busca los mejores productos para mascota"
+      ></Form.Control>
 
-            <Button
-                type='submit'
-                variant='outline-warning'
-                className='p-2'
-            >
-                Buscar
-            </Button>
-        </Form>
-    )
+      <Button type="submit" variant="outline-warning" className="p-2">
+        Buscar
+      </Button>
+    </Form>
+  );
 }
 
-export default SearchBox
+export default SearchBox;
