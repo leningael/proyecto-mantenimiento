@@ -178,7 +178,14 @@ function ProductEditScreen() {
                 type="number"
                 placeholder="Cantidad disponible"
                 value={countInStock}
-                onChange={(e) => setCountInStock(e.target.value)}
+                onChange={(e) => {
+                  const regex = /^[1-9]\d*$/; // Expresión regular que permite solamente números enteros positivos
+                  const value = e.target.value;
+                  if (regex.test(value)) {
+                    // Si el valor cumple con la expresión regular
+                    setCountInStock(value);
+                  }
+                }}
               ></Form.Control>
             </Form.Group>
 
