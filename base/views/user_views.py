@@ -17,9 +17,12 @@ from google.auth.transport import requests
 import jwt
 from django.contrib.auth.models import User
 from django.http import JsonResponse
+import hashlib
+from django.contrib.auth.hashers import make_password
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
+        attrs['password'] = hashlib.md5(attrs['password'].encode()).hexdigest()
         data = super().validate(attrs)
 
         serializer = UserSerializerWithToken(self.user).data
@@ -60,11 +63,12 @@ def google_sign_in(request):
 def registerUser(request):
     data = request.data
     try:
+        unhashed_password = hashlib.md5(data['password'].encode()).hexdigest()
         user = User.objects.create(
             first_name=data['name'],
             username=data['email'],
             email=data['email'],
-            password=data['password']
+            password=make_password(unhashed_password),
         )
 
         serializer = UserSerializerWithToken(user, many=False)
