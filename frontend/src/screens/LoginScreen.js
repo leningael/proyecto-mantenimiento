@@ -12,7 +12,11 @@ import Logins from '../components/Logins';
 // import {GoogleLogin} from "react-google-login"
 import {gapi} from "gapi-script"
 import LoginButton from './login'
-const clientId="795948132843-dcfvnj4f58c0jisogn9qfqnsg20hat0f.apps.googleusercontent.com"
+import jwtDecode from 'jwt-decode'
+import { loginGoogle } from '../actions/googleActions'
+
+const CLIENT_ID = '697743163109-gl9qckdfkh76tps2orhe2uc35068jkh9.apps.googleusercontent.com';
+const google = window.google;
 
 function LoginScreen() {
     //valores de usuarios 
@@ -42,15 +46,35 @@ function LoginScreen() {
         e.preventDefault()
         dispatch(login(email, password))
     }
-
+    //google handlers
+    const onSignIn = (response) => {
+        console.log(response);
+    }
+    const handleGoogleCredentialResponse = (response) => {
+        let userObject = jwtDecode(response.credential)
+        console.log(userObject);
+        dispatch(loginGoogle(response.credential))
+    }
+    const onFailure= (res) =>{
+        console.log("Login failed", res);
+    }
+    //initialize google button
     useEffect(()=>{
-        function start(){
-          gapi.client.init({
-            clientId: clientId,
-            scope: ""
-          })
-        };
-        gapi.load('client:auth2', start)
+        google.accounts.id.initialize({
+            client_id: CLIENT_ID,
+            callback: handleGoogleCredentialResponse,
+            cookie_policy: "single_host_origin",
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("g_id_onload"),
+            {
+                theme: "outline",
+                size: "large",
+                text: "continue_with",
+                shape: "rectangular",
+                onSuccess: onSignIn,
+                onFailure: onFailure,
+            });
       });
     return (
         //Formulario para inicar sesion
@@ -97,6 +121,9 @@ function LoginScreen() {
                         to={redirect ? `/register?redirect=${redirect}` : '/register'}>
                         Registrar
                         </Link>
+                </Col>
+                <Col>
+                <div id='g_id_onload'></div>
                 </Col>
             </Row>
 

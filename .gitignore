@@ -1,1 +1,9 @@
 myenv/
+venv/
+*__pycache__
+*package-lock.*
+base/migrations/__pycache__/
+base/*/__pycache__/
+frontend/build/
+.DS_Store
+db.sqlite3
