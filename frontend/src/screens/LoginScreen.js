@@ -86,20 +86,20 @@ function LoginScreen() {
 
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="email">
-          <Form.Label>Email</Form.Label>
+          <Form.Label>Correo</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Ingresa tu Email"
+            placeholder="Ingresa tu correo electronico"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
         <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Contraseña</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Ingresa tu Password"
+            placeholder="Ingresa tu contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
@@ -115,7 +115,7 @@ function LoginScreen() {
         <Col>
           Eres cliente nuevo?, si es así solo registrate y listo{" "}
           <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
-            Registrar
+            REGISTRAR
           </Link>
         </Col>
         <Col>
