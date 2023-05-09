@@ -21,12 +21,12 @@ function SearchBox() {
   };
   return (
     /*Barra de busqueda diseño*/
-    <Form onSubmit={submitHandler} inline="true">
+    <Form onSubmit={submitHandler} inline="true" className="d-flex">
       <Form.Control
         type="text"
         name="q"
         onChange={(e) => setKeyword(e.target.value)}
-        className="mr-sm-2 ml-sm-5"
+        className="mr-2 ml-sm-5"
         placeholder="Busca los mejores productos para mascota"
       ></Form.Control>
 

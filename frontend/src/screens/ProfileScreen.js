@@ -71,7 +71,7 @@ function ProfileScreen() {
     return ( /*Formulario de datos del perfil*/
         <Row>
             
-            <Col xs={3}>
+            <Col md={3} className='mb-3'>
                 <h2>Perfil</h2>
 
                 {message && <Message variant='danger'>{message}</Message>}
@@ -133,7 +133,7 @@ function ProfileScreen() {
                 </Form>
             </Col>
 
-            <Col xs={9} /*Datos sobre las ordenes del usuario*/>
+            <Col md={9} /*Datos sobre las ordenes del usuario*/>
                 <h2>My Ordenes</h2>
                 {loadingOrders ? (
                     <Loader />

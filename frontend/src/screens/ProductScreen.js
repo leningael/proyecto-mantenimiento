@@ -69,12 +69,12 @@ function ProductScreen() {
                     : ( /*Mensaje de error en caso de algun fallo*/
                         <div>
                             <Row>
-                                <Col xs={6}>
+                                <Col md={6} className='mb-3'>
                                     <Image src={product.image} alt={product.name} fluid />
                                 </Col>
 
 
-                                <Col xs={3} /*Datos del producto elegido*/>
+                                <Col md={6} lg={3}  className='mb-3'/*Datos del producto elegido*/>
                                     <ListGroup variant="flush">
                                         <ListGroup.Item>
                                             <h3>{product.name}</h3>
@@ -95,8 +95,8 @@ function ProductScreen() {
                                 </Col>
 
 
-                                <Col xs={3}  /*Datos del producto elegido*/>
-                                    <Card>
+                                <Col md={6} lg={3} className='mb-3' /*Datos del producto elegido*/>
+                                    <Card className='h-auto mx-auto'>
                                         <ListGroup variant='flush'>
                                             <ListGroup.Item>
                                                 <Row>
@@ -156,7 +156,7 @@ function ProductScreen() {
                             </Row>
 
                             <Row>
-                                <Col xs={6}>
+                                <Col md={6}>
                                     <h4>Reseñas</h4>
                                     {product.reviews.length === 0 && <Message variant='info'>No hay reseñas</Message> /*Verifica si hay reseñas*/}
 

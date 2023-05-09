@@ -34,7 +34,7 @@ function CartScreen() {
 
     return (
         <Row>
-            <Col xs={8}>
+            <Col md={8} className='mb-3'>
                 <h1>Carrito de compra</h1>
                 {cartItems.length === 0 ? (
                     <Message variant='info'>
@@ -46,19 +46,17 @@ function CartScreen() {
                             {cartItems.map(item => (
                                 <ListGroup.Item key={item.product}>
                                     <Row>
-                                        <Col xs={2}>
+                                        <Col md={2}>
                                             <Image src={item.image} alt={item.name} fluid rounded />
                                         </Col>
-                                        <Col xs={3}>
+                                        <Col md={3}>
                                             <Link to={`/product/${item.product}`}>{item.name}</Link>
                                         </Col>
 
-                                        <Col xs={2}>
+                                        <Col md={2}>
                                             ${item.price}
                                         </Col>
-
-                                            //Cantidad de productos
-                                        <Col xs={3}>
+                                        <Col md={3}>
                                             <Form.Control
                                                 as="select"
                                                 value={item.qty}
@@ -75,7 +73,7 @@ function CartScreen() {
 
                                             </Form.Control>
                                         </Col>
-                                        <Col xs={1}>
+                                        <Col md={1}>
                                             <Button /*Boton para remover productos*/
                                                 type='button'
                                                 variant='light'
@@ -91,8 +89,8 @@ function CartScreen() {
                     )}
             </Col>
 
-            <Col xs={4}>
-                <Card>
+            <Col md={4}>
+                <Card className='h-auto mx-auto'>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
                             <h2>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) artículos</h2>

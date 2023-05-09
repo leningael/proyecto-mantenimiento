@@ -53,7 +53,7 @@ function PlaceOrderScreen() {
         <div>
             <CheckoutSteps step1 step2 step3 step4 />
             <Row>
-                <Col xs={8}>
+                <Col md={8}>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
                             <h2>Envío</h2>
@@ -107,7 +107,7 @@ function PlaceOrderScreen() {
 
                 </Col>
 
-                <Col xs={4}>
+                <Col md={4}>
                     <Card       /*Información de el envio*/>
                         <ListGroup variant='flush'>
                             <ListGroup.Item>

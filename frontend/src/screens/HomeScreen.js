@@ -16,7 +16,7 @@ function HomeScreen() {
   const [sortBy, setSortBy] = useState("");
   let { error, loading, products, page, pages } = productList;
   const location = useLocation();
-  let keyword = location.search;
+  let keyword = location.search.replace("?", "");
 
   useEffect(() => {
     dispatch(listProducts(keyword, sortBy));
@@ -25,7 +25,7 @@ function HomeScreen() {
   return (
     //Pagina principal de el e-commerce donde se muestran todos los productos existentes, se llama a la lista de productos desde el archivo productsAction.js
     <div>
-      <div className="d-flex justify-content-between">
+      <div className="d-sm-flex justify-content-between">
         <h1>Productos en existencia</h1>
         <select
           onChange={(e) => setSortBy(e.target.value)}

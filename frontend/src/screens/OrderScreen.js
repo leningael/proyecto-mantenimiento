@@ -84,7 +84,7 @@ function OrderScreen() {
                 <div>
                     <h1>Order: {order.Id}</h1>
                     <Row>
-                        <Col xs={8}>
+                        <Col md={8}>
                             <ListGroup variant='flush'>
                                 <ListGroup.Item /*Datos de la orden*/> 
                                     <h2>Envío </h2> 
@@ -151,7 +151,7 @@ function OrderScreen() {
 
                         </Col>
 
-                        <Col xs={4}>
+                        <Col md={4}>
                             <Card                   /*Información del pedido*/>
                                 <ListGroup variant='flush'>
                                     <ListGroup.Item>
