@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
@@ -17,10 +15,26 @@ def getProducts(request):
     query = request.query_params.get('keyword')
     if query == None:
         query = ''
+    sort = request.query_params.get('sort')
+    if sort == None:
+        sort = ''
+    if sort == 'createdAt':
+        sort = '-createdAt'
+    elif sort == 'price_asc':
+        sort = 'price'
+    elif sort == 'price_desc':
+        sort = '-price'
+    elif sort == 'name':
+        sort = 'name'
+    else:
+        sort = '-createdAt'
 
-    products = Product.objects.filter(
-        name__icontains=query).order_by('-createdAt')
-
+    products = Product.objects.filter(name__icontains=query).order_by(
+            sort)
+    
+    if sort == 'name':
+        products = sorted(products, key=lambda x: x.name.lower())
+    
     page = request.query_params.get('page')
     paginator = Paginator(products, 5)
 
