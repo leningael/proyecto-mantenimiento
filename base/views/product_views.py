@@ -1,12 +1,21 @@
+from django.shortcuts import render
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from backend.settings import MEDIA_ROOT
+
 #Dentro de la vista de los productos se importan los componentes que van a formar parte de la misma, los datos del producto y las reviews que se van a mostrar
 from base.models import Product, Review
 from base.serializers import ProductSerializer
 
 from rest_framework import status
+
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from django.http import JsonResponse
+
 
 #El API recopila todos los productos y los muestra , también recaba los productos que sean buscados por medio de la barra de búsqueda, si no existe ninguno, no se muestra nada 
 #y la vista queda en blanco, además de eso, se paginan los productos en cantiades de 5, mostrando solo una peuqeña porción en la pantalla de inicio y se separan por diferentes páginas enumeradas
@@ -75,11 +84,12 @@ def createProduct(request):
 
     product = Product.objects.create(
         user=user,
-        name='Sample Name',
+        name='',
+        image='',
         price=0,
-        brand='Sample Brand',
+        brand='',
         countInStock=0,
-        category='Sample Category',
+        category='',
         description=''
     )
 
@@ -92,14 +102,18 @@ def createProduct(request):
 def updateProduct(request, pk):
     data = request.data
     product = Product.objects.get(_id=pk)
-
     product.name = data['name']
     product.price = data['price']
     product.brand = data['brand']
     product.countInStock = data['countInStock']
     product.category = data['category']
     product.description = data['description']
-
+    
+    #Para el caso en el que no se subió imagen y se puso url
+    if data['image'] != 'Image was uploaded':
+        product.image = data['image']
+    print(product.image)
+        
     product.save()
 
     serializer = ProductSerializer(product, many=False)
@@ -116,14 +130,25 @@ def deleteProduct(request, pk):
 #La función por la cual los usuarios pueden agregar imagenes a lo productos, por medio de un archivo o una url
 @api_view(['POST'])
 def uploadImage(request):
+    
     data = request.data
 
     product_id = data['product_id']
     product = Product.objects.get(_id=product_id)
 
-    product.image = request.FILES.get('image')
+    #obtener los datos del producto del cuerpo de la solicitud
+    image = request.FILES.get('image') # obtener la imagen del cuerpo de la solicitud
+    
+    # guardar la imagen en el sistema de archivos
+    file_name = default_storage.save(image.name, ContentFile(image.read()))
+    
+    # construir la URL de la imagen a partir del nombre del archivo
+    image_url = default_storage.url(file_name)
+    
+    # crear un objeto Product y guardar la URL de la imagen en la base de datos
+    product.image = image_url
     product.save()
-
+    
     return Response('Image was uploaded')
 
 #Esta función permite crear reviews de los productos, pero solo está disponible para los usuarios que tenga cuenta y que su sesión esté inciada, pero por cada usuario debe existir solo una review
