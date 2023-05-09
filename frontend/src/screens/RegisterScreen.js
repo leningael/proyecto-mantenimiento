@@ -66,6 +66,7 @@ function RegisterScreen({ location, history }) {
                         required
                         type='email'
                         placeholder='Ingresa tu correo'
+                        color='black'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     >

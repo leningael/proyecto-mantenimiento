@@ -88,7 +88,7 @@ function OrderScreen({ match, history }) {
                                 <ListGroup.Item /*Datos de la orden*/> 
                                     <h2>Envío </h2> 
                                     <p><strong>Nombre: </strong> {order.user.name}</p> 
-                                    <p><strong>Email: </strong><a href={`mailto:${order.user.email}`}>{order.user.email}</a></p>
+                                    <p><strong>Correo: </strong><a href={`mailto:${order.user.email}`}>{order.user.email}</a></p>
                                     <p>
                                         <strong>Direción de envío: </strong>
                                         {order.shippingAddress.address},  {order.shippingAddress.city}

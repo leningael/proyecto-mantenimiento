@@ -77,7 +77,7 @@ function UserEditScreen({ match, history }) {/*Editar usuarios, pagina para admi
                             </Form.Group>
 
                             <Form.Group controlId='email'>
-                                <Form.Label>Email </Form.Label>
+                                <Form.Label>Correo </Form.Label>
                                 <Form.Control
                                     type='email'
                                     placeholder='Ingresa tu correo'
